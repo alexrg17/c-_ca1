@@ -1,9 +1,10 @@
-#include "board.h"
-#include <fstream>
 #include <iostream>
+#include <fstream>
+#include <vector>
+#include "bug.h"
+#include "crawler.h"
+#include "hopper.h"
 #include "board.h"
-#include "crawler.h" // Include the header file for the Crawler class
-#include "hopper.h" // Include the header file for the Hopper class
 
 Board::Board() {}
 
@@ -38,4 +39,27 @@ void Board::initializeBoardFromFile(const std::string& filename) {
 
 std::vector<Bug*> Board::getBugVector() const {
     return bugVector;
+}
+
+void Board::displayBugDetails(int bugId) const {
+    bool found = false;
+    for (const Bug* bug : bugVector) {
+        if (bug->getId() == bugId) {
+            found = true;
+            std::cout << "Bug " << bugId << " found. Details:" << std::endl;
+            std::cout << "ID: " << bug->getId() << std::endl;
+            std::cout << "Type: " << (dynamic_cast<const Crawler*>(bug) ? "Crawler" : "Hopper") << std::endl;
+            std::cout << "Location: (" << bug->getPosition().first << "," << bug->getPosition().second << ")" << std::endl;
+            std::cout << "Size: " << bug->getSize() << std::endl;
+            std::cout << "Direction: " << static_cast<int>(bug->getDirection()) << std::endl;
+            if (dynamic_cast<const Hopper*>(bug)) {
+                std::cout << "Hop Length: " << dynamic_cast<const Hopper*>(bug)->getHopLength() << std::endl;
+            }
+            std::cout << "Status: " << (bug->isAlive() ? "Alive" : "Dead") << std::endl;
+            break;
+        }
+    }
+    if (!found) {
+        std::cout << "Bug " << bugId << " not found." << std::endl;
+    }
 }

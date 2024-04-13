@@ -2,9 +2,9 @@
 #include <fstream>
 #include <vector>
 #include "bug.h"
+#include "board.h"
 #include "crawler.h"
 #include "hopper.h"
-#include "board.h"
 
 int main() {
     // Initialize the board and populate the bug vector from "bugs.txt"
@@ -27,6 +27,12 @@ int main() {
     for (Bug* bug : bug_vector) {
         bug->move(); // Calls the appropriate move function based on the actual object type
     }
+
+    // Find a bug by ID
+    int bugId;
+    std::cout << "Enter bug ID to find: ";
+    std::cin >> bugId;
+    board.displayBugDetails(bugId);
 
     // Free the memory
     for (Bug* bug : bug_vector) {

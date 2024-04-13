@@ -1,7 +1,3 @@
-//
-// Created by Alex Radu on 12/04/2024.
-//
-
 #ifndef CPP_CA1_BOARD_H
 #define CPP_CA1_BOARD_H
 
@@ -18,7 +14,7 @@ public:
 
     void initializeBoardFromFile(const std::string& filename); // Function to initialize board from file
     std::vector<Bug*> getBugVector() const; // Declaration of getBugVector function
+    void displayBugDetails(int bugId) const; // Declaration to find and display bug details
 };
 
 #endif //CPP_CA1_BOARD_H
-
