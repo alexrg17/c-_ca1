@@ -1,10 +1,7 @@
-#include <iostream>
-#include <fstream>
-#include <vector>
-#include "bug.h"
+
+#include "board.h"
 #include "crawler.h"
 #include "hopper.h"
-#include "board.h"
 
 Board::Board() {}
 

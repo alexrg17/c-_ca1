@@ -1,6 +1,9 @@
+
 #ifndef CPP_CA1_BOARD_H
 #define CPP_CA1_BOARD_H
 
+#include <iostream>
+#include <fstream>
 #include <vector>
 #include "bug.h"
 
