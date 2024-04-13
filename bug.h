@@ -35,7 +35,7 @@ public:
     Direction getDirection() const;
     int getSize() const;
     bool isAlive() const;
-    std::list<std::pair<int, int>> getPath() const;
+    const std::list<std::pair<int, int>>& getPath() const; // Return list
 };
 
 #endif // BUG_H

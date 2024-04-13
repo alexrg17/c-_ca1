@@ -50,6 +50,6 @@ bool Bug::isAlive() const {
     return alive;
 }
 
-std::list<std::pair<int, int>> Bug::getPath() const {
+const std::list<std::pair<int, int>>& Bug::getPath() const {
     return path;
 }

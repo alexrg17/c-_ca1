@@ -60,3 +60,14 @@ void Board::displayBugDetails(int bugId) const {
         std::cout << "Bug " << bugId << " not found." << std::endl;
     }
 }
+
+void Board::displayLifeHistory() const {
+    for (const Bug* bug : bugVector) {
+        std::cout << "Bug " << bug->getId() << " Path: ";
+        const std::list<std::pair<int, int>>& path = bug->getPath();
+        for (const auto& pos : path) {
+            std::cout << "(" << pos.first << "," << pos.second << "),";
+        }
+        std::cout << " " << (bug->isAlive() ? "Alive!" : "Dead") << std::endl;
+    }
+}
