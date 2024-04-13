@@ -4,11 +4,18 @@
 
 #ifndef CPP_CA1_BOARD_H
 #define CPP_CA1_BOARD_H
+#include <vector>
+#include "bug.h"
 
+class Board {
+private:
+    std::vector<Bug*> bugVector;
 
-class board {
+public:
+    Board();
+    ~Board();
 
+    void initializeBoardFromFile(const std::string& filename);
 };
-
 
 #endif //CPP_CA1_BOARD_H

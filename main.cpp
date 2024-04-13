@@ -1,19 +1,18 @@
 #include <iostream>
+#include <fstream>
 #include <vector>
 #include "bug.h"
 #include "crawler.h"
 #include "hopper.h"
+#include "board.h"
 
 int main() {
-    std::vector<Bug*> bug_vector;
+    // Initialize the board and populate the bug vector from "bugs.txt"
+    Board board;
+    board.initializeBoardFromFile("bugs.txt");
 
-    // Read data from "bugs.txt" and create Bug objects dynamically on the heap
-    // Example:
-    Bug* crawler = new Crawler(1, std::make_pair(0, 0), Direction::North, 1);
-    Bug* hopper = new Hopper(2, std::make_pair(5, 5), Direction::East, 2, 3);
-
-    bug_vector.push_back(crawler);
-    bug_vector.push_back(hopper);
+    // Get the populated bug vector from the board
+    std::vector<Bug*> bug_vector = board.getBugVector();
 
     // Move all bugs
     for (Bug* bug : bug_vector) {
