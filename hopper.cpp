@@ -34,3 +34,6 @@ void Hopper::move() {
     }
 }
 
+int Hopper::getHopLength() const {
+    return hopLength;
+}
