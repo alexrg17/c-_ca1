@@ -3,7 +3,6 @@
 //
 
 #include "bug.h"
-
 #include <stdexcept>
 
 Bug::Bug(int _id, std::pair<int, int> _position, Direction _direction, int _size)

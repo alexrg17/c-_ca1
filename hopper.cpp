@@ -4,8 +4,6 @@
 
 #include "hopper.h"
 
-#include <cstdlib> // for rand()
-
 Hopper::Hopper(int _id, std::pair<int, int> _position, Direction _direction, int _size, int _hopLength)
         : Bug(_id, _position, _direction, _size), hopLength(_hopLength) {}
 
@@ -31,10 +29,8 @@ void Hopper::move() {
             }
             path.push_back(position);
         } else {
-            // Generate random direction
-            int randomDir = rand() % 4 + 1; // 1-4
-            direction = static_cast<Direction>(randomDir);
-            move(); // Recursively call move until bug can move forward
+            // Handle if way is blocked
         }
     }
 }
+

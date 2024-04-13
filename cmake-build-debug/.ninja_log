@@ -1,0 +1,8 @@
+# ninja log v5
+2	183	1713031462681518550	CMakeFiles/cpp_ca1.dir/cell.cpp.o	7d65c0891338589a
+3	184	1713031462681584675	CMakeFiles/cpp_ca1.dir/board.cpp.o	7cb30b9e981fd070
+2	635	1713031463133389839	CMakeFiles/cpp_ca1.dir/crawler.cpp.o	39520cc2a2b0fe27
+2	637	1713031463133484088	CMakeFiles/cpp_ca1.dir/hopper.cpp.o	c0c8c1d900194ceb
+1	637	1713031463135700573	CMakeFiles/cpp_ca1.dir/bug.cpp.o	7c1160bbb505a7c7
+2	540	1713031627862814370	CMakeFiles/cpp_ca1.dir/main.cpp.o	d69a54d9ee99c131
+540	773	1713031628097242334	cpp_ca1	4cc57cda5d75398a

@@ -3,7 +3,6 @@
 //
 
 #include "crawler.h"
-#include <cstdlib> // for rand()
 
 Crawler::Crawler(int _id, std::pair<int, int> _position, Direction _direction, int _size)
         : Bug(_id, _position, _direction, _size) {}
@@ -29,10 +28,7 @@ void Crawler::move() {
             }
             path.push_back(position);
         } else {
-            // Generate random direction
-            int randomDir = rand() % 4 + 1; // 1-4
-            direction = static_cast<Direction>(randomDir);
-            move(); // Recursively call move until bug can move forward
+            // Handle if way is blocked
         }
     }
 }
