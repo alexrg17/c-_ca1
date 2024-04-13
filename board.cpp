@@ -1,12 +1,9 @@
-//
-// Created by Alex Radu on 12/04/2024.
-//
-
-#include "board.h"
-
 #include "board.h"
 #include <fstream>
 #include <iostream>
+#include "board.h"
+#include "crawler.h" // Include the header file for the Crawler class
+#include "hopper.h" // Include the header file for the Hopper class
 
 Board::Board() {}
 
@@ -27,9 +24,18 @@ void Board::initializeBoardFromFile(const std::string& filename) {
     int id, x, y, direction, size;
     while (file >> id >> x >> y >> direction >> size) {
         Direction dir = static_cast<Direction>(direction);
-        Bug* bug = new Bug(id, std::make_pair(x, y), dir, size);
+        Bug* bug;
+        if (dir == Direction::North || dir == Direction::South) {
+            bug = new Crawler(id, std::make_pair(x, y), dir, size);
+        } else {
+            bug = new Hopper(id, std::make_pair(x, y), dir, size, 3); // Assuming hop length is 3
+        }
         bugVector.push_back(bug);
     }
 
     file.close();
+}
+
+std::vector<Bug*> Board::getBugVector() const {
+    return bugVector;
 }

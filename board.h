@@ -4,6 +4,7 @@
 
 #ifndef CPP_CA1_BOARD_H
 #define CPP_CA1_BOARD_H
+
 #include <vector>
 #include "bug.h"
 
@@ -12,10 +13,12 @@ private:
     std::vector<Bug*> bugVector;
 
 public:
-    Board();
-    ~Board();
+    Board(); // Constructor
+    ~Board(); // Destructor
 
-    void initializeBoardFromFile(const std::string& filename);
+    void initializeBoardFromFile(const std::string& filename); // Function to initialize board from file
+    std::vector<Bug*> getBugVector() const; // Declaration of getBugVector function
 };
 
 #endif //CPP_CA1_BOARD_H
+
