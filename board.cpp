@@ -119,3 +119,11 @@ Bug* Board::getBugAtPosition(std::pair<int, int> position) const {
     }
     return nullptr; // Return nullptr if no bug is found at the given position
 }
+
+void Board::tapBoard() {
+    for (Bug* bug : bugVector) {
+        if (bug->isAlive()) { // Only move the bug if it is alive
+            bug->move();
+        }
+    }
+}

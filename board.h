@@ -24,6 +24,7 @@ public:
     void killBug(int bugId); // Add this method
     void displayBoard() const; // Add this method
     Bug* getBugAtPosition(std::pair<int, int> position) const; // Add this method
+    void tapBoard(); // Add this method
 };
 
 #endif // BOARD_H
