@@ -1,4 +1,4 @@
-// bug.h
+
 #ifndef BUG_H
 #define BUG_H
 

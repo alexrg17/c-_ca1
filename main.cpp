@@ -1,4 +1,4 @@
-// main.cpp
+
 #include <iostream>
 #include <fstream>
 #include <vector>
@@ -16,7 +16,8 @@ int main() {
 
     // Add a loop to continuously ask the user for input
     while (true) {
-        std::cout << "Please enter an option (1: Display bug, 2: Display life history, 3: Move bug, 4: Kill bug, 5: Display board, 6: Tap board, 0: Exit): ";
+        std::cout
+                << "Please enter an option (1: Display bug, 2: Display life history, 3: Move bug, 4: Kill bug, 5: Display board, 6: Tap board, 7: Write life history to file, 0: Exit): ";
         int option;
         std::cin >> option;
 
@@ -43,8 +44,8 @@ int main() {
             board.displayBoard();
         } else if (option == 6) {
             board.tapBoard();
+        } else if (option == 7) {
+            board.writeLifeHistoryToFile();
         }
     }
-
-    return 0;
 }

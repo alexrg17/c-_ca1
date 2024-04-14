@@ -1,8 +1,10 @@
-// board.cpp
+
 #include <iostream>
 #include <fstream>
 #include <vector>
 #include <sstream> // Include this to use std::istringstream
+#include <iomanip> // Include this to use std::put_time
+#include <ctime> // Include this to use std::time, std::localtime
 #include "bug.h"
 #include "board.h"
 #include "crawler.h" // Include this to use Crawler
@@ -138,4 +140,38 @@ void Board::tapBoard() {
             bug->move();
         }
     }
+}
+
+void Board::writeLifeHistoryToFile() const {
+    // Get the current date and time
+    auto t = std::time(nullptr);
+    auto tm = *std::localtime(&t);
+    std::ostringstream oss;
+    oss << std::put_time(&tm, "%Y-%m-%d_%H-%M-%S");
+    auto str = oss.str();
+
+    // Open the file
+    std::ofstream file("bugs_life_history_" + str + ".out");
+    if (!file) {
+        std::cerr << "Unable to open file for writing" << std::endl;
+        return;
+    }
+
+    // Write the life history of all bugs to the file
+    for (const Bug* bug : bugVector) {
+        file << bug->getId() << " ";
+        if (dynamic_cast<const Crawler*>(bug)) {
+            file << "Crawler ";
+        } else if (dynamic_cast<const Hopper*>(bug)) {
+            file << "Hopper ";
+        }
+        file << "Path: ";
+        for (const auto& position : bug->getPath()) {
+            file << "(" << position.first << "," << position.second << "),";
+        }
+        file << " " << (bug->isAlive() ? "Alive!" : "Dead!") << std::endl;
+    }
+
+    // Close the file
+    file.close();
 }
