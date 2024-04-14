@@ -63,7 +63,19 @@ void Board::displayBugDetails(int bugId) const {
 }
 
 void Board::displayLifeHistory() const {
-    // Implementation of displayLifeHistory function
+    for (const Bug* bug : bugVector) {
+        std::cout << bug->getId() << " ";
+        if (dynamic_cast<const Crawler*>(bug)) {
+            std::cout << "Crawler ";
+        } else if (dynamic_cast<const Hopper*>(bug)) {
+            std::cout << "Hopper ";
+        }
+        std::cout << "Path: ";
+        for (const auto& position : bug->getPath()) {
+            std::cout << "(" << position.first << "," << position.second << "),";
+        }
+        std::cout << " " << (bug->isAlive() ? "Alive!" : "Dead!") << std::endl;
+    }
 }
 
 void Board::moveBug(int bugId) {

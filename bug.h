@@ -25,6 +25,7 @@ public:
     virtual bool isAlive() const;
     virtual bool isWayBlocked() = 0;
     virtual void kill(); // Add this method
+    std::list<std::pair<int, int>> getPath() const; // Add this method
 
 protected:
     int id;

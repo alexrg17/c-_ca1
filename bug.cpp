@@ -30,3 +30,7 @@ bool Bug::isAlive() const {
 void Bug::kill() { // Implement this method
     alive = false;
 }
+
+std::list<std::pair<int, int>> Bug::getPath() const { // Implement this method
+    return path;
+}
