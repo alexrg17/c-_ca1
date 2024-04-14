@@ -1,3 +1,4 @@
+// board.h
 #ifndef BOARD_H
 #define BOARD_H
 
@@ -19,6 +20,10 @@ public:
     std::vector<Bug*> getBugVector() const; // Declaration of getBugVector function
     void displayBugDetails(int bugId) const; // Declaration to find and display bug details
     void displayLifeHistory() const; // Display life history of all bugs
+    void moveBug(int bugId); // Add this method
+    void killBug(int bugId); // Add this method
+    void displayBoard() const; // Add this method
+    Bug* getBugAtPosition(std::pair<int, int> position) const; // Add this method
 };
 
 #endif // BOARD_H

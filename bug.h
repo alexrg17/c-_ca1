@@ -1,3 +1,4 @@
+// bug.h
 #ifndef BUG_H
 #define BUG_H
 
@@ -23,6 +24,7 @@ public:
     virtual int getSize() const;
     virtual bool isAlive() const;
     virtual bool isWayBlocked() = 0;
+    virtual void kill(); // Add this method
 
 protected:
     int id;
@@ -33,4 +35,4 @@ protected:
     std::list<std::pair<int, int>> path; // Path taken by a bug
 };
 
-#endif // BUG_H
+#endif

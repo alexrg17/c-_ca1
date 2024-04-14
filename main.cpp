@@ -1,3 +1,4 @@
+// main.cpp
 #include <iostream>
 #include <fstream>
 #include <vector>
@@ -23,6 +24,19 @@ int main() {
 
     // Display the life history of all bugs
     board.displayLifeHistory();
+
+    // Move a bug
+    std::cout << "Please enter the ID of the bug you want to move: ";
+    std::cin >> bugId;
+    board.moveBug(bugId);
+
+    // Kill a bug
+    std::cout << "Please enter the ID of the bug you want to kill: ";
+    std::cin >> bugId;
+    board.killBug(bugId);
+
+    // Display the board
+    board.displayBoard();
 
     return 0;
 }

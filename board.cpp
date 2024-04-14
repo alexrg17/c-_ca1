@@ -1,3 +1,4 @@
+// board.cpp
 #include <iostream>
 #include <fstream>
 #include <vector>
@@ -63,4 +64,58 @@ void Board::displayBugDetails(int bugId) const {
 
 void Board::displayLifeHistory() const {
     // Implementation of displayLifeHistory function
+}
+
+void Board::moveBug(int bugId) {
+    for (Bug* bug : bugVector) {
+        if (bug->getId() == bugId) {
+            if (bug->isWayBlocked()) {
+                std::cout << "Bug " << bugId << " cannot move" << std::endl;
+            } else {
+                bug->move();
+                std::cout << "Bug " << bugId << " has moved to (" << bug->getPosition().first << ", " << bug->getPosition().second << ")" << std::endl;
+            }
+            return;
+        }
+    }
+    std::cout << "No bug found with ID " << bugId << std::endl;
+}
+
+void Board::killBug(int bugId) {
+    for (Bug* bug : bugVector) {
+        if (bug->getId() == bugId) {
+            if (!bug->isAlive()) {
+                std::cout << "Bug " << bugId << " is already dead" << std::endl;
+            } else {
+                bug->kill();
+                std::cout << "Bug " << bugId << " has been killed" << std::endl;
+            }
+            return;
+        }
+    }
+    std::cout << "No bug found with ID " << bugId << std::endl;
+}
+
+void Board::displayBoard() const {
+    // Assuming the board is a 10x10 grid
+    for (int i = 0; i < 10; ++i) {
+        for (int j = 0; j < 10; ++j) {
+            Bug* bug = getBugAtPosition(std::make_pair(i, j));
+            if (bug != nullptr) {
+                std::cout << bug->getId() << " ";
+            } else {
+                std::cout << ". ";
+            }
+        }
+        std::cout << std::endl;
+    }
+}
+
+Bug* Board::getBugAtPosition(std::pair<int, int> position) const {
+    for (Bug* bug : bugVector) {
+        if (bug->getPosition() == position) {
+            return bug;
+        }
+    }
+    return nullptr; // Return nullptr if no bug is found at the given position
 }

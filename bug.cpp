@@ -1,3 +1,4 @@
+// bug.cpp
 #include "bug.h"
 #include <stdexcept>
 
@@ -24,4 +25,8 @@ int Bug::getSize() const {
 
 bool Bug::isAlive() const {
     return alive;
+}
+
+void Bug::kill() { // Implement this method
+    alive = false;
 }
