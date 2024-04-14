@@ -1,10 +1,10 @@
-
 #ifndef BOARD_H
 #define BOARD_H
 
 #include <iostream>
 #include <fstream>
 #include <vector>
+
 #include "bug.h"
 
 class Board {

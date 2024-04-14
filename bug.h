@@ -1,41 +1,36 @@
-//
-// Created by Alex Radu on 12/04/2024.
-//
-
 #ifndef BUG_H
 #define BUG_H
 
-#include <utility>
-#include <list>
+#include <utility> // For std::pair
+#include <list> // For std::list
 
-// Enum class for direction
 enum class Direction {
-    North, East, South, West
+    North,
+    East,
+    South,
+    West
 };
 
 class Bug {
+public:
+    Bug(int _id, std::pair<int, int> _position, Direction _direction, int _size, bool _alive);
+    virtual ~Bug();
+
+    virtual void move() = 0;
+    virtual int getId() const;
+    virtual std::pair<int, int> getPosition() const;
+    virtual Direction getDirection() const;
+    virtual int getSize() const;
+    virtual bool isAlive() const;
+    virtual bool isWayBlocked() = 0;
+
 protected:
     int id;
     std::pair<int, int> position;
     Direction direction;
     int size;
     bool alive;
-    std::list<std::pair<int, int>> path;
-
-public:
-    Bug(int _id, std::pair<int, int> _position, Direction _direction, int _size);
-    virtual ~Bug();
-
-    virtual void move() = 0; // Pure virtual function
-
-    bool isWayBlocked();
-
-    int getId() const;
-    std::pair<int, int> getPosition() const;
-    Direction getDirection() const;
-    int getSize() const;
-    bool isAlive() const;
-    const std::list<std::pair<int, int>>& getPath() const; // Return list
+    std::list<std::pair<int, int>> path; // Path taken by a bug
 };
 
 #endif // BUG_H

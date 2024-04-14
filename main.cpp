@@ -7,37 +7,22 @@
 #include "hopper.h"
 
 int main() {
-    // Initialize the board and populate the bug vector from "bugs.txt"
+    // Create a board object
     Board board;
-    board.initializeBoardFromFile("bugs.txt");
 
-    // Get the populated bug vector from the board
-    std::vector<Bug*> bug_vector = board.getBugVector();
+    // Initialize the board from a file
+    board.initializeBoardFromFile("/Users/alex/CLionProjects/cpp_ca1/bugs.txt");
 
-    // Display all bugs
-    for (Bug* bug : bug_vector) {
-        std::cout << bug->getId() << " " << (dynamic_cast<Crawler*>(bug) ? "Crawler" : "Hopper") << " "
-                  << "(" << bug->getPosition().first << "," << bug->getPosition().second << ") "
-                  << bug->getSize() << " " << static_cast<int>(bug->getDirection()) << " "
-                  << (dynamic_cast<Hopper*>(bug) ? dynamic_cast<Hopper*>(bug)->getHopLength() : 0) << " "
-                  << (bug->isAlive() ? "Alive" : "Dead") << std::endl;
-    }
-
-    // Move all bugs
-    for (Bug* bug : bug_vector) {
-        bug->move(); // Calls the appropriate move function based on the actual object type
-    }
-
-    // Find a bug by ID
+    // Ask the user for the bug ID
+    std::cout << "Please enter the ID of the bug you want to display: ";
     int bugId;
-    std::cout << "Enter bug ID to find: ";
     std::cin >> bugId;
+
+    // Display the details of the bug with the input ID
     board.displayBugDetails(bugId);
 
-    // Free the memory
-    for (Bug* bug : bug_vector) {
-        delete bug;
-    }
+    // Display the life history of all bugs
+    board.displayLifeHistory();
 
     return 0;
 }
