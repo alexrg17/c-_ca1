@@ -70,13 +70,31 @@ void Board::displayLifeHistory() const {
         } else if (dynamic_cast<const Hopper*>(bug)) {
             std::cout << "Hopper ";
         }
-        std::cout << "Path: ";
-        for (const auto& position : bug->getPath()) {
-            std::cout << "(" << position.first << "," << position.second << "),";
+        std::cout << "Location: (" << bug->getPosition().first << "," << bug->getPosition().second << ") ";
+        std::cout << "Size: " << bug->getSize() << " ";
+        std::string direction;
+        switch (bug->getDirection()) {
+            case Direction::North:
+                direction = "North";
+                break;
+            case Direction::East:
+                direction = "East";
+                break;
+            case Direction::South:
+                direction = "South";
+                break;
+            case Direction::West:
+                direction = "West";
+                break;
         }
-        std::cout << " " << (bug->isAlive() ? "Alive!" : "Dead!") << std::endl;
+        std::cout << "Direction: " << direction << " ";
+        if (const Hopper* hopper = dynamic_cast<const Hopper*>(bug)) {
+            std::cout << "HopLength: " << hopper->getHopLength() << " ";
+        }
+        std::cout << (bug->isAlive() ? "Alive!" : "Dead!") << std::endl;
     }
 }
+
 
 void Board::moveBug(int bugId) {
     Bug* bugToMove = nullptr;
