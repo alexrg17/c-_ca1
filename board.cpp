@@ -79,26 +79,36 @@ void Board::displayLifeHistory() const {
 }
 
 void Board::moveBug(int bugId) {
+    Bug* bugToMove = nullptr;
     for (Bug* bug : bugVector) {
         if (bug->getId() == bugId) {
-            if (bug->isWayBlocked()) {
-                std::cout << "Bug " << bugId << " cannot move" << std::endl;
-            } else {
-                // Remove the bug from its current cell
-                board[bug->getPosition()].erase(std::remove(board[bug->getPosition()].begin(), board[bug->getPosition()].end(), bug), board[bug->getPosition()].end());
-
-                // Move the bug
-                bug->move();
-
-                // Add the bug to its new cell
-                board[bug->getPosition()].push_back(bug);
-
-                std::cout << "Bug " << bugId << " has moved to (" << bug->getPosition().first << ", " << bug->getPosition().second << ")" << std::endl;
-            }
-            return;
+            bugToMove = bug;
+            break;
         }
     }
-    std::cout << "No bug found with ID " << bugId << std::endl;
+
+    if (bugToMove == nullptr) {
+        std::cout << "No bug found with ID " << bugId << std::endl;
+        return;
+    }
+
+    if (bugToMove->isAlive()) {
+        std::pair<int, int> oldPosition = bugToMove->getPosition();
+        bugToMove->move();
+        std::pair<int, int> newPosition = bugToMove->getPosition();
+
+        Bug* otherBug = getBugAtPosition(newPosition);
+        if (otherBug != nullptr && otherBug->isAlive()) {
+            if (bugToMove->getSize() > otherBug->getSize()) {
+                otherBug->kill();
+            } else {
+                bugToMove->kill();
+            }
+        }
+
+        board[oldPosition].erase(std::remove(board[oldPosition].begin(), board[oldPosition].end(), bugToMove), board[oldPosition].end());
+        board[newPosition].push_back(bugToMove);
+    }
 }
 
 void Board::killBug(int bugId) {
