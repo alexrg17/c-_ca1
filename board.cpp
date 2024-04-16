@@ -1,19 +1,17 @@
-
 #include <iostream>
 #include <fstream>
 #include <vector>
-#include <sstream> // Include this to use std::istringstream
-#include <iomanip> // Include this to use std::put_time
-#include <ctime> // Include this to use std::time, std::localtime
+#include <sstream>
+#include <iomanip>
+#include <ctime>
 #include "bug.h"
 #include "board.h"
-#include "crawler.h" // Include this to use Crawler
-#include "hopper.h" // Include this to use Hopper
+#include "crawler.h"
+#include "hopper.h"
 
 Board::Board() {}
 
 Board::~Board() {
-    // Free the memory of bugs in the vector
     for (Bug* bug : bugVector) {
         delete bug;
     }
@@ -86,7 +84,15 @@ void Board::moveBug(int bugId) {
             if (bug->isWayBlocked()) {
                 std::cout << "Bug " << bugId << " cannot move" << std::endl;
             } else {
+                // Remove the bug from its current cell
+                board[bug->getPosition()].erase(std::remove(board[bug->getPosition()].begin(), board[bug->getPosition()].end(), bug), board[bug->getPosition()].end());
+
+                // Move the bug
                 bug->move();
+
+                // Add the bug to its new cell
+                board[bug->getPosition()].push_back(bug);
+
                 std::cout << "Bug " << bugId << " has moved to (" << bug->getPosition().first << ", " << bug->getPosition().second << ")" << std::endl;
             }
             return;
@@ -131,33 +137,30 @@ Bug* Board::getBugAtPosition(std::pair<int, int> position) const {
             return bug;
         }
     }
-    return nullptr; // Return nullptr if no bug is found at the given position
+    return nullptr;
 }
 
 void Board::tapBoard() {
     for (Bug* bug : bugVector) {
-        if (bug->isAlive()) { // Only move the bug if it is alive
+        if (bug->isAlive()) {
             bug->move();
         }
     }
 }
 
 void Board::writeLifeHistoryToFile() const {
-    // Get the current date and time
     auto t = std::time(nullptr);
     auto tm = *std::localtime(&t);
     std::ostringstream oss;
     oss << std::put_time(&tm, "%Y-%m-%d_%H-%M-%S");
     auto str = oss.str();
 
-    // Open the file
     std::ofstream file("bugs_life_history_" + str + ".out");
     if (!file) {
         std::cerr << "Unable to open file for writing" << std::endl;
         return;
     }
 
-    // Write the life history of all bugs to the file
     for (const Bug* bug : bugVector) {
         file << bug->getId() << " ";
         if (dynamic_cast<const Crawler*>(bug)) {
@@ -172,6 +175,5 @@ void Board::writeLifeHistoryToFile() const {
         file << " " << (bug->isAlive() ? "Alive!" : "Dead!") << std::endl;
     }
 
-    // Close the file
     file.close();
 }

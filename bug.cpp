@@ -1,9 +1,8 @@
-// bug.cpp
 #include "bug.h"
 #include <stdexcept>
 
-Bug::Bug(int _id, std::pair<int, int> _position, Direction _direction, int _size, bool _alive)
-        : id(_id), position(_position), direction(_direction), size(_size), alive(_alive) {}
+Bug::Bug(int _id, std::pair<int, int> _position, Direction _direction, int _size)
+        : id(_id), position(_position), direction(_direction), size(_size), alive(true) {}
 
 Bug::~Bug() {}
 
@@ -27,10 +26,10 @@ bool Bug::isAlive() const {
     return alive;
 }
 
-void Bug::kill() { // Implement this method
+void Bug::kill() {
     alive = false;
 }
 
-std::list<std::pair<int, int>> Bug::getPath() const { // Implement this method
+std::list<std::pair<int, int>> Bug::getPath() const {
     return path;
 }

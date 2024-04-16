@@ -1,4 +1,3 @@
-
 #ifndef BUG_H
 #define BUG_H
 
@@ -6,7 +5,7 @@
 #include <list> // For std::list
 
 enum class Direction {
-    North,
+    North = 1,
     East,
     South,
     West
@@ -14,18 +13,18 @@ enum class Direction {
 
 class Bug {
 public:
-    Bug(int _id, std::pair<int, int> _position, Direction _direction, int _size, bool _alive);
+    Bug(int _id, std::pair<int, int> _position, Direction _direction, int _size);
     virtual ~Bug();
 
     virtual void move() = 0;
-    virtual int getId() const;
-    virtual std::pair<int, int> getPosition() const;
-    virtual Direction getDirection() const;
-    virtual int getSize() const;
-    virtual bool isAlive() const;
     virtual bool isWayBlocked() = 0;
-    virtual void kill(); // Add this method
-    std::list<std::pair<int, int>> getPath() const; // Add this method
+    int getId() const;
+    std::pair<int, int> getPosition() const;
+    Direction getDirection() const;
+    int getSize() const;
+    bool isAlive() const;
+    void kill();
+    std::list<std::pair<int, int>> getPath() const;
 
 protected:
     int id;
@@ -33,7 +32,7 @@ protected:
     Direction direction;
     int size;
     bool alive;
-    std::list<std::pair<int, int>> path; // Path taken by a bug
+    std::list<std::pair<int, int>> path;
 };
 
 #endif

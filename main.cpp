@@ -8,13 +8,10 @@
 #include "hopper.h"
 
 int main() {
-    // Create a board object
     Board board;
 
-    // Initialize the board from a file
     board.initializeBoardFromFile("/Users/alex/CLionProjects/cpp_ca1/bugs.txt");
 
-    // Add a loop to continuously ask the user for input
     while (true) {
         std::cout
                 << "Please enter an option (1: Display bug, 2: Display life history, 3: Move bug, 4: Kill bug, 5: Display board, 6: Tap board, 7: Write life history to file, 0: Exit): ";
@@ -22,7 +19,7 @@ int main() {
         std::cin >> option;
 
         if (option == 0) {
-            break; // Exit the program
+            break;
         } else if (option == 1) {
             std::cout << "Please enter the ID of the bug you want to display: ";
             int bugId;
