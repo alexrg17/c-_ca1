@@ -1,8 +1,9 @@
+// bug.h
 #ifndef BUG_H
 #define BUG_H
 
-#include <utility> // For std::pair
-#include <list> // For std::list
+#include <utility>
+#include <list>
 
 enum class Direction {
     North = 1,
@@ -13,7 +14,7 @@ enum class Direction {
 
 class Bug {
 public:
-    Bug(int _id, std::pair<int, int> _position, Direction _direction, int _size);
+    Bug(int _id, std::pair<int, int> _position, Direction _direction, int _size, std::pair<int, int> _boardSize);
     virtual ~Bug();
 
     virtual void move() = 0;
@@ -32,6 +33,7 @@ protected:
     Direction direction;
     int size;
     bool alive;
+    std::pair<int, int> boardSize;
     std::list<std::pair<int, int>> path;
 };
 

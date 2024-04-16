@@ -1,12 +1,16 @@
 #include "crawler.h"
 
-Crawler::Crawler(int _id, std::pair<int, int> _position, Direction _direction, int _size)
-        : Bug(_id, _position, _direction, _size) {}
+Crawler::Crawler(int _id, std::pair<int, int> _position, Direction _direction, int _size, std::pair<int, int> _boardSize)
+        : Bug(_id, _position, _direction, _size, _boardSize) {}
 
 void Crawler::move() {
     if (!isWayBlocked()) {
         position.first++;
-        path.push_back(position);
+        if (position.first >= 0 && position.first < boardSize.first) {
+            path.push_back(position);
+        } else {
+            alive = false; // kill the bug if it moves off the board
+        }
     } else {
         direction = static_cast<Direction>((rand() % 4) + 1);
     }
@@ -17,9 +21,9 @@ bool Crawler::isWayBlocked() {
         case Direction::North:
             return position.first == 0;
         case Direction::East:
-            return position.second == 9;
+            return position.second == boardSize.second - 1;
         case Direction::South:
-            return position.first == 9;
+            return position.first == boardSize.first - 1;
         case Direction::West:
             return position.second == 0;
         default:

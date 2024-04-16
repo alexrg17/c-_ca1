@@ -1,8 +1,9 @@
+
 #include "bug.h"
 #include <stdexcept>
 
-Bug::Bug(int _id, std::pair<int, int> _position, Direction _direction, int _size)
-        : id(_id), position(_position), direction(_direction), size(_size), alive(true) {}
+Bug::Bug(int _id, std::pair<int, int> _position, Direction _direction, int _size, std::pair<int, int> _boardSize)
+        : id(_id), position(_position), direction(_direction), size(_size), boardSize(_boardSize), alive(true) {}
 
 Bug::~Bug() {}
 

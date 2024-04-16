@@ -1,3 +1,4 @@
+
 #ifndef CRAWLER_H
 #define CRAWLER_H
 
@@ -6,7 +7,7 @@
 
 class Crawler : public Bug {
 public:
-    Crawler(int _id, std::pair<int, int> _position, Direction _direction, int _size);
+    Crawler(int _id, std::pair<int, int> _position, Direction _direction, int _size, std::pair<int, int> _boardSize);
 
     void move() override;
     bool isWayBlocked() override;

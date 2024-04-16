@@ -21,10 +21,12 @@ void Board::initializeBoardFromFile(const std::string& filename) {
     std::ifstream file(filename);
     if (!file) {
         std::cerr << "Unable to open file " << filename << std::endl;
-        exit(1); // call system to stop if file not found
+        exit(1);
     }
 
     std::string line;
+    std::pair<int, int> boardSize(10, 10);
+
     while (std::getline(file, line)) {
         std::istringstream iss(line);
         char type;
@@ -35,9 +37,9 @@ void Board::initializeBoardFromFile(const std::string& filename) {
         std::pair<int, int> position(x, y);
         Direction direction = static_cast<Direction>(extra);
         if (type == 'C') {
-            bugVector.push_back(new Crawler(id, position, direction, size));
+            bugVector.push_back(new Crawler(id, position, direction, size, boardSize));
         } else if (type == 'H') {
-            bugVector.push_back(new Hopper(id, position, direction, size, extra));
+            bugVector.push_back(new Hopper(id, position, direction, size, extra, boardSize));
         }
     }
 
