@@ -5,13 +5,18 @@ Hopper::Hopper(int _id, std::pair<int, int> _position, Direction _direction, int
 
 void Hopper::move() {
     if (!isWayBlocked()) {
-        position.first += hopLength;
-        path.push_back(position);
+        int newPosition = position.first + hopLength;
+        if (newPosition >= 0 && newPosition < 10) {
+            position.first = newPosition;
+            path.push_back(position);
+        } else {
+            alive = false;
+        }
     } else {
-
         direction = static_cast<Direction>((rand() % 4) + 1);
     }
 }
+
 
 bool Hopper::isWayBlocked() {
 
