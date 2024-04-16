@@ -5,17 +5,19 @@
 #include <fstream>
 #include <vector>
 #include <map>
+#include <list>
+#include <algorithm>
 
 #include "bug.h"
 
 class Board {
 private:
     std::vector<Bug*> bugVector;
-    std::map<std::pair<int, int>, std::vector<Bug*>> board;
+    std::vector<std::vector<std::list<Bug*>>> board;
 
 public:
-    Board(); // Constructor
-    ~Board(); // Destructor
+    Board();
+    ~Board();
 
     void initializeBoardFromFile(const std::string& filename);
     std::vector<Bug*> getBugVector() const;

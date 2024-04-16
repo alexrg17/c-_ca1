@@ -9,7 +9,9 @@
 #include "crawler.h"
 #include "hopper.h"
 
-Board::Board() {}
+Board::Board() {
+    board = std::vector<std::vector<std::list<Bug*>>>(10, std::vector<std::list<Bug*>>(10));
+}
 
 Board::~Board() {
     for (Bug* bug : bugVector) {
@@ -37,9 +39,13 @@ void Board::initializeBoardFromFile(const std::string& filename) {
         std::pair<int, int> position(x, y);
         Direction direction = static_cast<Direction>(extra);
         if (type == 'C') {
-            bugVector.push_back(new Crawler(id, position, direction, size, boardSize));
+            Bug* newBug = new Crawler(id, position, direction, size, boardSize);
+            bugVector.push_back(newBug);
+            board[position.first][position.second].push_back(newBug);
         } else if (type == 'H') {
-            bugVector.push_back(new Hopper(id, position, direction, size, extra, boardSize));
+            Bug* newBug = new Hopper(id, position, direction, size, extra, boardSize);
+            bugVector.push_back(newBug);
+            board[position.first][position.second].push_back(newBug);
         }
     }
 
@@ -97,7 +103,6 @@ void Board::displayLifeHistory() const {
     }
 }
 
-
 void Board::moveBug(int bugId) {
     Bug* bugToMove = nullptr;
     for (Bug* bug : bugVector) {
@@ -126,8 +131,8 @@ void Board::moveBug(int bugId) {
             }
         }
 
-        board[oldPosition].erase(std::remove(board[oldPosition].begin(), board[oldPosition].end(), bugToMove), board[oldPosition].end());
-        board[newPosition].push_back(bugToMove);
+        board[oldPosition.first][oldPosition.second].remove(bugToMove);
+        board[newPosition.first][newPosition.second].push_back(bugToMove);
     }
 }
 
@@ -147,17 +152,18 @@ void Board::killBug(int bugId) {
 }
 
 void Board::displayBoard() const {
-    // Assuming the board is a 10x10 grid
     for (int i = 0; i < 10; ++i) {
         for (int j = 0; j < 10; ++j) {
-            Bug* bug = getBugAtPosition(std::make_pair(i, j));
-            if (bug != nullptr) {
-                std::cout << bug->getId() << " ";
+            std::cout << "(" << i << "," << j << "): ";
+            if (board[i][j].empty()) {
+                std::cout << "empty";
             } else {
-                std::cout << ". ";
+                for (Bug* bug : board[i][j]) {
+                    std::cout << (dynamic_cast<Crawler*>(bug) ? "Crawler " : "Hopper ") << bug->getId() << ", ";
+                }
             }
+            std::cout << std::endl;
         }
-        std::cout << std::endl;
     }
 }
 
