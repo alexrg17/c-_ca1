@@ -1,20 +1,43 @@
 #include "crawler.h"
+#include "board.h"
 
-Crawler::Crawler(int _id, std::pair<int, int> _position, Direction _direction, int _size, std::pair<int, int> _boardSize)
-        : Bug(_id, _position, _direction, _size, _boardSize) {}
+Crawler::Crawler(int _id, std::pair<int, int> _position, Direction _direction, int _size, std::pair<int, int> _boardSize, Board& _board)
+        : board(_board), Bug(_id, _position, _direction, _size, _boardSize, _board) {}
 
-void Crawler::move() {
-    if (!isWayBlocked()) {
-        position.first++;
-        if (position.first >= 0 && position.first < boardSize.first) {
-            path.push_back(position);
-        } else {
-            alive = false; // kill the bug if it moves off the board
-        }
-    } else {
+std::pair<int, int> Crawler::move() {
+    std::pair<int, int> newPosition;
+    do {
+        newPosition = position; // Reset newPosition to current position at the start of each loop
         direction = static_cast<Direction>((rand() % 4) + 1);
+        switch (direction) {
+            case Direction::North:
+                newPosition.first--;
+                break;
+            case Direction::East:
+                newPosition.second++;
+                break;
+            case Direction::South:
+                newPosition.first++;
+                break;
+            case Direction::West:
+                newPosition.second--;
+                break;
+        }
+    } while (isWayBlocked());
+
+    // Check if the new position is within the board boundaries
+    if (newPosition.first >= 0 && newPosition.first < boardSize.first &&
+        newPosition.second >= 0 && newPosition.second < boardSize.second) {
+        position = newPosition;
+        path.push_back(position);
+        std::cout << "Crawler " << id << " moved to position: (" << position.first << ", " << position.second << ")" << std::endl;
+    } else {
+        std::cout << "Crawler " << id << " couldn't move to position: (" << newPosition.first << ", " << newPosition.second << ") - Out of bounds!" << std::endl;
     }
+
+    return position;
 }
+
 
 bool Crawler::isWayBlocked() {
     switch (direction) {
