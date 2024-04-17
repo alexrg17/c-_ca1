@@ -1,4 +1,3 @@
-
 #include "bug.h"
 #include <stdexcept>
 
@@ -29,6 +28,10 @@ bool Bug::isAlive() const {
 
 void Bug::kill() {
     alive = false;
+}
+
+void Bug::grow(int size) { // Added grow method
+    this->size += size;
 }
 
 std::list<std::pair<int, int>> Bug::getPath() const {

@@ -159,7 +159,9 @@ void Board::displayBoard() const {
                 std::cout << "empty";
             } else {
                 for (Bug* bug : board[i][j]) {
-                    std::cout << (dynamic_cast<Crawler*>(bug) ? "Crawler " : "Hopper ") << bug->getId() << ", ";
+                    if (bug->isAlive()) { // Only display the bug if it is alive
+                        std::cout << (dynamic_cast<Crawler*>(bug) ? "Crawler " : "Hopper ") << bug->getId() << ", ";
+                    }
                 }
             }
             std::cout << std::endl;
@@ -169,12 +171,13 @@ void Board::displayBoard() const {
 
 Bug* Board::getBugAtPosition(std::pair<int, int> position) const {
     for (Bug* bug : bugVector) {
-        if (bug->getPosition() == position) {
+        if (bug->getPosition() == position && bug->isAlive()) { // Only return the bug if it is alive
             return bug;
         }
     }
     return nullptr;
 }
+
 
 void Board::tapBoard() {
     for (Bug* bug : bugVector) {
@@ -182,7 +185,51 @@ void Board::tapBoard() {
             bug->move();
         }
     }
+
+    // After all bugs have moved, check for fights
+    for (int i = 0; i < 10; ++i) {
+        for (int j = 0; j < 10; ++j) {
+            if (board[i][j].size() > 1) { // If more than one bug in the cell
+                Bug* biggestBug = nullptr;
+                int max_size = -1;
+                std::vector<Bug*> sameSizeBugs;
+                for (Bug* bug : board[i][j]) {
+                    if (bug->getSize() > max_size) {
+                        max_size = bug->getSize();
+                        biggestBug = bug;
+                        sameSizeBugs.clear();
+                    } else if (bug->getSize() == max_size) {
+                        sameSizeBugs.push_back(bug);
+                    }
+                }
+
+                // If there are bugs of the same size as the biggest bug, select the winner randomly
+                if (!sameSizeBugs.empty()) {
+                    sameSizeBugs.push_back(biggestBug);
+                    biggestBug = sameSizeBugs[rand() % sameSizeBugs.size()];
+                }
+
+                // The biggest bug eats all other bugs
+                for (Bug* bug : board[i][j]) {
+                    if (bug != biggestBug) {
+                        biggestBug->grow(bug->getSize());
+                        bug->kill();
+                    }
+                }
+
+                // Remove dead bugs from the cell
+                std::list<Bug*> temp;
+                for (Bug* bug : board[i][j]) {
+                    if (bug->isAlive()) {
+                        temp.push_back(bug);
+                    }
+                }
+                board[i][j] = temp;
+            }
+        }
+    }
 }
+
 
 void Board::writeLifeHistoryToFile() const {
     auto t = std::time(nullptr);

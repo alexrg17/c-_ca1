@@ -1,4 +1,3 @@
-// bug.h
 #ifndef BUG_H
 #define BUG_H
 
@@ -25,6 +24,7 @@ public:
     int getSize() const;
     bool isAlive() const;
     void kill();
+    void grow(int size); // Added grow method
     std::list<std::pair<int, int>> getPath() const;
 
 protected:
@@ -37,4 +37,4 @@ protected:
     std::list<std::pair<int, int>> path;
 };
 
-#endif
+#endif // BUG_H

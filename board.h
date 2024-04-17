@@ -6,7 +6,6 @@
 #include <vector>
 #include <map>
 #include <list>
-#include <algorithm>
 
 #include "bug.h"
 
@@ -16,8 +15,8 @@ private:
     std::vector<std::vector<std::list<Bug*>>> board;
 
 public:
-    Board();
-    ~Board();
+    Board(); // Constructor
+    ~Board(); // Destructor
 
     void initializeBoardFromFile(const std::string& filename);
     std::vector<Bug*> getBugVector() const;
