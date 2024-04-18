@@ -14,7 +14,7 @@ std::pair<int, int> Bug::getPosition() const {
     return position;
 }
 
-void Bug::setPosition(std::pair<int, int> newPosition) {  // Implementation of setPosition
+void Bug::setPosition(std::pair<int, int> newPosition) {
     position = newPosition;
 }
 

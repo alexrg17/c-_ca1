@@ -17,7 +17,7 @@ public:
     bool isAlive() const;
 
 private:
-    Board& board; // Add a reference to the Board class
+    Board& board;
 };
 
 #endif // CRAWLER_H

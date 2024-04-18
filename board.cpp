@@ -8,6 +8,9 @@
 #include "board.h"
 #include "crawler.h"
 #include "hopper.h"
+#include <thread>
+#include <chrono>
+
 
 Board::Board() {
     board = std::vector<std::vector<std::list<Bug*>>>(10, std::vector<std::list<Bug*>>(10));
@@ -63,7 +66,7 @@ void Board::displayBugDetails(int bugId) const {
             std::cout << "Position: (" << bug->getPosition().first << ", " << bug->getPosition().second << ")" << std::endl;
             std::cout << "Size: " << bug->getSize() << std::endl;
             std::cout << "Alive: " << (bug->isAlive() ? "Yes" : "No") << std::endl;
-            // Add more details as needed...
+
             return;
         }
     }
@@ -155,7 +158,7 @@ void Board::displayBoard() const {
                 std::cout << "empty";
             } else {
                 for (Bug* bug : board[i][j]) {
-                    if (bug->isAlive()) { // Only display the bug if it is alive
+                    if (bug->isAlive()) {
                         std::cout << (dynamic_cast<Crawler*>(bug) ? "Crawler " : "Hopper ") << bug->getId() << ", ";
                     }
                 }
@@ -167,7 +170,7 @@ void Board::displayBoard() const {
 
 Bug* Board::getBugAtPosition(std::pair<int, int> position) const {
     for (Bug* bug : bugVector) {
-        if (bug->getPosition() == position && bug->isAlive()) { // Only return the bug if it is alive
+        if (bug->getPosition() == position && bug->isAlive()) {
             return bug;
         }
     }
@@ -254,3 +257,11 @@ void Board::writeLifeHistoryToFile() const {
     file.close();
 }
 
+bool Board::isGameOver() const {
+    for (const Bug* bug : bugVector) {
+        if (bug->isAlive()) {
+            return false; // If any bug is alive, the game is not over
+        }
+    }
+    return true; // If no bugs are alive, the game is over
+}

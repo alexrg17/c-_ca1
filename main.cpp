@@ -6,7 +6,7 @@
 #include "board.h"
 #include "crawler.h"
 #include "hopper.h"
-
+#include <thread>
 int main() {
     Board board;
 
@@ -14,7 +14,7 @@ int main() {
 
     while (true) {
         std::cout
-                << "Please enter an option (1: Display bug, 2: Display life history, 3: Move bug, 4: Kill bug, 5: Display board, 6: Tap board, 7: Write life history to file, 0: Exit): ";
+                << "Please enter an option (1: Display bug, 2: Display life history, 3: Move bug, 4: Kill bug, 5: Display board, 6: Tap board, 7: Write life history to file, 8: Run Simulation, 0: Exit): ";
         int option;
         std::cin >> option;
 
@@ -43,6 +43,19 @@ int main() {
             board.tapBoard();
         } else if (option == 7) {
             board.writeLifeHistoryToFile();
+        } else if (option == 8) {
+            // Run simulation
+            while (!board.isGameOver()) {
+                board.tapBoard();
+                board.displayBoard();
+                std::this_thread::sleep_for(std::chrono::seconds(1));
+            }
+
+            
+            board.writeLifeHistoryToFile();
+
+            std::cout << "Simulation ended. Results written to file." << std::endl;
+            break;
         }
     }
 }

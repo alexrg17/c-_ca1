@@ -19,7 +19,7 @@ public:
 
 private:
     int hopLength;
-    Board& board; // Add a reference to the Board class
+    Board& board;
 };
 
 #endif // HOPPER_H

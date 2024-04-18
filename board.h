@@ -28,6 +28,7 @@ public:
     Bug* getBugAtPosition(std::pair<int, int> position) const;
     void tapBoard();
     void writeLifeHistoryToFile() const;
+    bool isGameOver() const;
 };
 
 #endif // BOARD_H

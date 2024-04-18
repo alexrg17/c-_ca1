@@ -8,7 +8,7 @@ std::pair<int, int> Hopper::move() {
     std::pair<int, int> newPosition;
     Direction originalDirection = direction;
     do {
-        newPosition = position; // Reset newPosition to current position at the start of each loop
+        newPosition = position;
         direction = static_cast<Direction>((rand() % 4) + 1);
         switch (direction) {
             case Direction::North:
@@ -26,7 +26,7 @@ std::pair<int, int> Hopper::move() {
         }
     } while (isWayBlocked());
 
-    // Check if the new position is within the board boundaries
+
     if (newPosition.first >= 0 && newPosition.first < boardSize.first &&
         newPosition.second >= 0 && newPosition.second < boardSize.second) {
         position = newPosition;
