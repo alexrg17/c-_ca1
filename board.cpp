@@ -9,6 +9,7 @@
 #include "board.h"
 #include "crawler.h"
 #include "hopper.h"
+#include "PerimeterCrawler.h"
 #include <thread>
 #include <chrono>
 
@@ -40,7 +41,7 @@ void Board::initializeBoardFromFile(const std::string& filename) {
         char delimiter;
         if (!(iss >> type >> delimiter >> id >> delimiter >> x >> delimiter >> y >> delimiter >> directionValue >> delimiter >> size)) { break; } // error
 
-        if (type == 'H' && !(iss >> delimiter >> hopLength)) { break; } // error
+        if (type == 'H' && !(iss >> delimiter >> hopLength)) { break; }
 
         std::pair<int, int> position(x, y);
         Direction direction = static_cast<Direction>(directionValue);
@@ -52,14 +53,15 @@ void Board::initializeBoardFromFile(const std::string& filename) {
             Bug* newBug = new Hopper(id, position, direction, size, boardSize, *this, hopLength);
             bugVector.push_back(newBug);
             board[position.first][position.second].push_back(newBug);
+        } else if (type == 'P') {
+            Bug* newBug = new PerimeterCrawler(id, position, direction, size, boardSize, *this);
+            bugVector.push_back(newBug);
+            board[position.first][position.second].push_back(newBug);
         }
     }
 
     file.close();
 }
-
-
-
 
 std::vector<Bug*> Board::getBugVector() const {
     return bugVector;
@@ -85,11 +87,11 @@ void Board::displayBugDetails(int bugId) const {
         if (bug->getId() == bugId) {
             std::cout << "Bug ID: " << bug->getId() << std::endl;
             std::cout << "Position: (" << bug->getPosition().first << ", " << bug->getPosition().second << ")" << std::endl;
-            std::cout << "Direction: " << directionToString(bug->getDirection()) << std::endl; // Added line
+            std::cout << "Direction: " << directionToString(bug->getDirection()) << std::endl;
             std::cout << "Size: " << bug->getSize() << std::endl;
-            if (bug->getType() == 'H') { // Check if the bug is a Hopper
+            if (bug->getType() == 'H') {
                 const Hopper* hopper = static_cast<const Hopper*>(bug);
-                std::cout << "Hop Length: " << hopper->getHopLength() << std::endl; // Added line
+                std::cout << "Hop Length: " << hopper->getHopLength() << std::endl;
             }
             std::cout << "Alive: " << (bug->isAlive() ? "Yes" : "No") << std::endl;
             return;
@@ -97,7 +99,6 @@ void Board::displayBugDetails(int bugId) const {
     }
     std::cout << "No bug found with ID " << bugId << std::endl;
 }
-
 
 void Board::displayLifeHistory() const {
     for (const Bug* bug : bugVector) {
@@ -152,11 +153,9 @@ void Board::moveBug(int bugId) {
 
         std::cout << "Moving bug " << bugId << " from (" << oldPosition.first << ", " << oldPosition.second << ") to (" << newPosition.first << ", " << newPosition.second << ")" << std::endl;
 
-        // Update the board
         board[oldPosition.first][oldPosition.second].remove(bugToMove);
         board[newPosition.first][newPosition.second].push_back(bugToMove);
 
-        // Update the bug's internal position
         bugToMove->setPosition(newPosition);
     }
 }
@@ -286,8 +285,8 @@ void Board::writeLifeHistoryToFile() const {
 bool Board::isGameOver() const {
     for (const Bug* bug : bugVector) {
         if (bug->isAlive()) {
-            return false; // If any bug is alive, the game is not over
+            return false;
         }
     }
-    return true; // If no bugs are alive, the game is over
+    return true;
 }

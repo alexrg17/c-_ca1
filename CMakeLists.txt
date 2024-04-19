@@ -13,4 +13,7 @@ add_executable(cpp_ca1 main.cpp
         cell.cpp
         cell.h
         board.cpp
-        board.h)
+        board.h
+        PerimeterCrawler.cpp
+        PerimeterCrawler.h
+)

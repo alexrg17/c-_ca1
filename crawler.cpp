@@ -38,7 +38,6 @@ std::pair<int, int> Crawler::move() {
     return position;
 }
 
-
 bool Crawler::isWayBlocked() {
     switch (direction) {
         case Direction::North:

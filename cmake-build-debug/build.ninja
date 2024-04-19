@@ -85,6 +85,12 @@ build CMakeFiles/cpp_ca1.dir/board.cpp.o: CXX_COMPILER__cpp_ca1_unscanned_Debug 
   OBJECT_DIR = CMakeFiles/cpp_ca1.dir
   OBJECT_FILE_DIR = CMakeFiles/cpp_ca1.dir
 
+build CMakeFiles/cpp_ca1.dir/PerimeterCrawler.cpp.o: CXX_COMPILER__cpp_ca1_unscanned_Debug /Users/alex/CLionProjects/cpp_ca1/PerimeterCrawler.cpp || cmake_object_order_depends_target_cpp_ca1
+  DEP_FILE = CMakeFiles/cpp_ca1.dir/PerimeterCrawler.cpp.o.d
+  FLAGS = -g -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk -fcolor-diagnostics
+  OBJECT_DIR = CMakeFiles/cpp_ca1.dir
+  OBJECT_FILE_DIR = CMakeFiles/cpp_ca1.dir
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target cpp_ca1
@@ -93,7 +99,7 @@ build CMakeFiles/cpp_ca1.dir/board.cpp.o: CXX_COMPILER__cpp_ca1_unscanned_Debug 
 #############################################
 # Link the executable cpp_ca1
 
-build cpp_ca1: CXX_EXECUTABLE_LINKER__cpp_ca1_Debug CMakeFiles/cpp_ca1.dir/main.cpp.o CMakeFiles/cpp_ca1.dir/bug.cpp.o CMakeFiles/cpp_ca1.dir/hopper.cpp.o CMakeFiles/cpp_ca1.dir/crawler.cpp.o CMakeFiles/cpp_ca1.dir/cell.cpp.o CMakeFiles/cpp_ca1.dir/board.cpp.o
+build cpp_ca1: CXX_EXECUTABLE_LINKER__cpp_ca1_Debug CMakeFiles/cpp_ca1.dir/main.cpp.o CMakeFiles/cpp_ca1.dir/bug.cpp.o CMakeFiles/cpp_ca1.dir/hopper.cpp.o CMakeFiles/cpp_ca1.dir/crawler.cpp.o CMakeFiles/cpp_ca1.dir/cell.cpp.o CMakeFiles/cpp_ca1.dir/board.cpp.o CMakeFiles/cpp_ca1.dir/PerimeterCrawler.cpp.o
   FLAGS = -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk
   OBJECT_DIR = CMakeFiles/cpp_ca1.dir
   POST_BUILD = :
