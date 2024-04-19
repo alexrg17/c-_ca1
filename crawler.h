@@ -15,6 +15,7 @@ public:
     Direction getDirection() const;
     int getSize() const;
     bool isAlive() const;
+    char getType() const override { return 'C'; }
 
 private:
     Board& board;

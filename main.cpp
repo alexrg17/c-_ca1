@@ -51,7 +51,7 @@ int main() {
                 std::this_thread::sleep_for(std::chrono::seconds(1));
             }
 
-            
+
             board.writeLifeHistoryToFile();
 
             std::cout << "Simulation ended. Results written to file." << std::endl;

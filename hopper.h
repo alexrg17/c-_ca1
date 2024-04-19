@@ -16,6 +16,7 @@ public:
     int getSize() const;
     bool isAlive() const;
     int getHopLength() const;
+    char getType() const override { return 'H'; }
 
 private:
     int hopLength;

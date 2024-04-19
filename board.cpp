@@ -1,3 +1,4 @@
+#include <string>
 #include <iostream>
 #include <fstream>
 #include <vector>
@@ -35,18 +36,20 @@ void Board::initializeBoardFromFile(const std::string& filename) {
     while (std::getline(file, line)) {
         std::istringstream iss(line);
         char type;
-        int id, x, y, size, extra;
+        int id, x, y, size, directionValue, hopLength = 0;
         char delimiter;
-        if (!(iss >> type >> delimiter >> id >> delimiter >> x >> delimiter >> y >> delimiter >> size >> delimiter >> extra)) { break; } // error
+        if (!(iss >> type >> delimiter >> id >> delimiter >> x >> delimiter >> y >> delimiter >> directionValue >> delimiter >> size)) { break; } // error
+
+        if (type == 'H' && !(iss >> delimiter >> hopLength)) { break; } // error
 
         std::pair<int, int> position(x, y);
-        Direction direction = static_cast<Direction>(extra);
+        Direction direction = static_cast<Direction>(directionValue);
         if (type == 'C') {
             Bug* newBug = new Crawler(id, position, direction, size, boardSize, *this);
             bugVector.push_back(newBug);
             board[position.first][position.second].push_back(newBug);
         } else if (type == 'H') {
-            Bug* newBug = new Hopper(id, position, direction, size, boardSize, *this, extra);
+            Bug* newBug = new Hopper(id, position, direction, size, boardSize, *this, hopLength);
             bugVector.push_back(newBug);
             board[position.first][position.second].push_back(newBug);
         }
@@ -55,8 +58,26 @@ void Board::initializeBoardFromFile(const std::string& filename) {
     file.close();
 }
 
+
+
+
 std::vector<Bug*> Board::getBugVector() const {
     return bugVector;
+}
+
+std::string directionToString(Direction direction) {
+    switch (direction) {
+        case Direction::North:
+            return "North";
+        case Direction::East:
+            return "East";
+        case Direction::South:
+            return "South";
+        case Direction::West:
+            return "West";
+        default:
+            return "Invalid direction";
+    }
 }
 
 void Board::displayBugDetails(int bugId) const {
@@ -64,14 +85,19 @@ void Board::displayBugDetails(int bugId) const {
         if (bug->getId() == bugId) {
             std::cout << "Bug ID: " << bug->getId() << std::endl;
             std::cout << "Position: (" << bug->getPosition().first << ", " << bug->getPosition().second << ")" << std::endl;
+            std::cout << "Direction: " << directionToString(bug->getDirection()) << std::endl; // Added line
             std::cout << "Size: " << bug->getSize() << std::endl;
+            if (bug->getType() == 'H') { // Check if the bug is a Hopper
+                const Hopper* hopper = static_cast<const Hopper*>(bug);
+                std::cout << "Hop Length: " << hopper->getHopLength() << std::endl; // Added line
+            }
             std::cout << "Alive: " << (bug->isAlive() ? "Yes" : "No") << std::endl;
-
             return;
         }
     }
     std::cout << "No bug found with ID " << bugId << std::endl;
 }
+
 
 void Board::displayLifeHistory() const {
     for (const Bug* bug : bugVector) {

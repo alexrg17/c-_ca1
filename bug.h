@@ -20,6 +20,7 @@ public:
 
     virtual std::pair<int, int> move() = 0;
     virtual bool isWayBlocked() = 0;
+    virtual char getType() const = 0;
     int getId() const;
     std::pair<int, int> getPosition() const;
     void setPosition(std::pair<int, int> newPosition);
