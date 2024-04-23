@@ -208,6 +208,10 @@ void Board::tapBoard() {
         if (bug->isAlive()) {
             std::pair<int, int> oldPosition = bug->getPosition();
             std::pair<int, int> newPosition = bug->move();
+
+            // Print out the details of each bug as it's being moved
+            std::cout << "Moving bug " << bug->getId() << " from (" << oldPosition.first << ", " << oldPosition.second << ") to (" << newPosition.first << ", " << newPosition.second << ")" << std::endl;
+
             board[oldPosition.first][oldPosition.second].remove(bug);
             board[newPosition.first][newPosition.second].push_back(bug);
         }
@@ -250,6 +254,7 @@ void Board::tapBoard() {
             }
         }
     }
+
 }
 
 void Board::writeLifeHistoryToFile() const {
@@ -271,6 +276,8 @@ void Board::writeLifeHistoryToFile() const {
             file << "Crawler ";
         } else if (dynamic_cast<const Hopper*>(bug)) {
             file << "Hopper ";
+        } else if (dynamic_cast<const PerimeterCrawler*>(bug)) {
+            file << "PerimeterCrawler ";
         }
         file << "Path: ";
         for (const auto& position : bug->getPath()) {
