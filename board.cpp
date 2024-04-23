@@ -184,7 +184,14 @@ void Board::displayBoard() const {
             } else {
                 for (Bug* bug : board[i][j]) {
                     if (bug->isAlive()) {
-                        std::cout << (dynamic_cast<Crawler*>(bug) ? "Crawler " : "Hopper ") << bug->getId() << ", ";
+                        if (dynamic_cast<Crawler*>(bug)) {
+                            std::cout << "Crawler ";
+                        } else if (dynamic_cast<Hopper*>(bug)) {
+                            std::cout << "Hopper ";
+                        } else if (dynamic_cast<PerimeterCrawler*>(bug)) {
+                            std::cout << "PerimeterCrawler ";
+                        }
+                        std::cout << bug->getId() << ", ";
                     }
                 }
             }
@@ -192,6 +199,7 @@ void Board::displayBoard() const {
         }
     }
 }
+
 
 Bug* Board::getBugAtPosition(std::pair<int, int> position) const {
     for (Bug* bug : bugVector) {
