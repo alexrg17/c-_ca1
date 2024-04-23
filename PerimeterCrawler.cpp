@@ -1,6 +1,4 @@
-//
-// Created by Alex Radu on 19/04/2024.
-//
+// PerimeterCrawler.cpp
 #include "PerimeterCrawler.h"
 #include "bug.h"
 
@@ -32,6 +30,9 @@ std::pair<int, int> PerimeterCrawler::move() {
             break;
     }
 
+    // After moving, add the new position to the path
+    path.push_back(position);
+
     return position;
 }
 
@@ -48,7 +49,6 @@ void PerimeterCrawler::changeDirection() {
 }
 
 bool PerimeterCrawler::isWayBlocked() {
-
     return false;
 }
 

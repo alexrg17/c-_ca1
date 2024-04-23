@@ -1,7 +1,4 @@
-//
-// Created by Alex Radu on 19/04/2024.
-//
-
+// PerimeterCrawler.h
 #ifndef CPP_CA1_PERIMETERCRAWLER_H
 #define CPP_CA1_PERIMETERCRAWLER_H
 
